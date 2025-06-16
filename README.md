@@ -1,2 +1,5 @@
-# llm-agent-lab
-Exemplos práticos e comentados de agentes com LLMs / Hands-on examples of LLM agents for automation and decision-making.
+# LLM Agents Lab
+
+A hands-on sandbox for experimenting with LLM-based agents using Python.
+
+This project explores how to build autonomous agents using modern LLMs, tools, and frameworks.
