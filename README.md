@@ -1,130 +1,170 @@
-# LLM Agents Lab
+# LLM Agents Lab
 
-> Practical, well‑documented examples of building LLM‑based agents with Python & LangChain (OpenAI + open‑source back‑ends).
+> Exemplos práticos, testáveis e bem organizados de agentes LLM com Python & LangChain (OpenAI e outros backends open‑source).
 
----
-
-## ✨ Why this repo exists
-
-* Executives, architects and developers falam muito sobre *agents* e *AI‑first workflows*, mas falta referência **curta, opinativa e com código**.
-* Aqui você encontra **passo a passo real**, sem hype: do Hello‑World até agentes com ferramentas, memória e orquestração.
-* Cada exemplo serve de apoio aos posts do [Victor Nardi Vilella](https://www.linkedin.com/in/…): ver, copiar, adaptar e discutir.
+![CI](https://github.com/vvilella/llm-agent-lab/actions/workflows/ci.yml/badge.svg)
 
 ---
 
-## 🗺️ Road‑map rápido
+## ✨ Por que esse repositório existe?
+
+- Todo mundo fala de *LLM agents* e *AI‑first workflows*, mas faltam exemplos **concretos, didáticos e opinativos** com código.
+- Aqui você encontra **implementações reais**, passo a passo, com foco técnico e aplicável.
+- Cada exemplo complementa os conteúdos publicados por [Victor Nardi Vilella](https://www.linkedin.com/in/…), com base para discussão, aprendizado e experimentação.
+
+---
+
+## 🗺️ Roadmap rápido
 
 | Etapa                                   | Status | Pasta/alvo                     |
 | --------------------------------------- | ------ | ------------------------------ |
-| **Setup** – venv, key, teste mínimo     | ✅      | `main.py`                      |
-| Agente simples (zero‑shot)              | ✅      | `examples/simple_agent.py`     |
+| **Setup** – venv, chave, teste mínimo   | ✅     | `main.py`                      |
+| Agente simples (zero‑shot)              | ✅     | `examples/simple_agent.py`     |
 | Agente multi‑tool (calculator, search)  | 🔜     | `examples/multi_tool_agent.py` |
-| Memória & history                       | 🔜     | `agents/memory_agent.py`       |
+| Memória & histórico de contexto         | ✅     | `agents/memory_agent.py`       |
 | RAG com embeddings + StackSpot AI       | 🔜     | `rag/`                         |
 | Orquestração híbrida (OpenAI + Mistral) | 🔜     | `orchestration/`               |
 
 ---
 
-## 🖥️ Requisitos rápidos
+## 🖥️ Requisitos rápidos
 
 ```bash
-Python 3.10+
-Poetry (opcional) ou pip + venv
+Python 3.10+
+Poetry (opcional) ou pip + venv
 Conta OpenAI (ou outro provider) com chave ativa.
 ```
 
 ---
 
-## ⚙️ Instalação (5 passos)
+## ⚙️ Instalação local
 
 ```bash
-# 1 Clone
-git clone https://github.com/<seu-usuario>/llm-agent-lab.git
+# 1. Clone o repositório
+git clone https://github.com/vvilella/llm-agent-lab.git
 cd llm-agent-lab
 
-# 2 Crie ambiente\python3 -m venv .venv
+# 2. Crie e ative o ambiente virtual
+python3 -m venv .venv
 source .venv/bin/activate
 
-# 3 Instale deps
+# 3. Instale as dependências principais
 pip install -r requirements.txt
 
-# 4 Configure a chave
+# 4. Adicione suas chaves de API
 cp .env.example .env
-# edite .env e cole sua OPENAI_API_KEY
+# edite o arquivo .env com sua OPENAI_API_KEY
 
-# 5 Teste
-python main.py
+# 5. (Opcional) Instale extras para testes e lint
+pip install pytest ruff
 ```
 
 ---
 
-## 🏃 Uso rápido
+## 🏃 Uso rápido
 
-```bash
-python main.py
-Pergunte algo ao agente: Quando Roma foi fundada?
-Resposta do agente: Roma foi fundada em 21 de abril de 753 a.C.
-```
-
-Para uso interativo contínuo, rode:
+### ➤ Testar um agente básico (sem memória)
 
 ```bash
 python examples/simple_agent.py
 ```
 
+### ➤ Usar um agente com **memória de interações**
+
+```bash
+python agents/memory_agent.py
+```
+
+> O agente manterá um histórico interno da conversa. Experimente:
+> 
+> `Você: Quem descobriu o Brasil?`  
+> `Você: E quantos anos faz isso?`
+
 ---
 
-## 🧩 Estrutura de pastas
+## 🧠 Componentes principais
+
+- **Memory** → Guarda o histórico das últimas interações (em memória).
+- **LangChain + OpenAI** → Interface para LLMs (com suporte futuro a Mistral e OpenRouter).
+- **Tools** → (Em breve) Integração com ferramentas externas via agentes multi-step.
+- **Prompt contextual** → Geração adaptativa de resposta com base no histórico da conversa.
+
+---
+
+## 🧪 Testes & Lint
+
+```bash
+# Rodar testes unitários
+pytest
+
+# Rodar lint com ruff
+ruff .
+```
+
+---
+
+## 🧩 Estrutura de pastas
 
 ```
 llm-agent-lab/
-├── agents/           # Implementações de agentes customizados
-│   └── __init__.py
-├── examples/         # Scripts de uso rápido / demos
+├── agents/           # Agentes com mais lógica (ex: memória, multi-tool)
+│   └── memory_agent.py
+├── examples/         # Scripts simples e diretos
 │   └── simple_agent.py
-├── utils/            # Helpers (prompt, logging, etc.)
-├── tests/            # Pytest (TDD)
-├── main.py           # Entrypoint minimalista
-├── requirements.txt  # Deps chave
-├── .env.example      # Exemplo de env
-└── README.md
+├── utils/            # Módulos auxiliares (ex: memória, prompts)
+│   └── memory.py
+├── tests/            # Testes automatizados
+│   └── test_memory.py
+├── main.py           # Entrypoint mínimo para hello-world
+├── .env.example      # Exemplo de configuração
+├── requirements.txt  # Dependências principais
+├── README.md         # Este documento
+└── .github/
+    └── workflows/
+        └── ci.yml    # Pipeline GitHub Actions
 ```
 
 ---
 
-## 🔑 Gerenciamento de chaves
+## 🔐 Gerenciamento de chaves
 
-* **Nunca** comite `.env` – ele já está no `.gitignore`.
-* Para múltiplos providers, crie variáveis como `MISTRAL_API_KEY`, `OPENROUTER_API_KEY` e carregue via `dotenv`.
+- Nunca comite `.env` — ele já está no `.gitignore`.
+- Para múltiplos providers, use:
+  - `OPENAI_API_KEY`
+  - `MISTRAL_API_KEY`
+  - `OPENROUTER_API_KEY`
 
----
-
-## 🧠 Conceitos rápidos usados aqui
-
-* **Zero‑shot reasoning** – prompt simples, sem exemplo.
-* **Tool‑usage** – LangChain "tools" permitem chamar APIs externas.
-* **Memory** – guarda histórico para simular contexto longo.
-* **RAG** – Retrieval Augmented Generation; busca + geração.
-
-Links de referência em `/docs/links.md`.
+Todas são carregadas via `dotenv`.
 
 ---
 
-## 🤝 Contribuindo
+## 📚 Referências & Glossário
 
-1. Fork ➡️ Branch ➡️ PR
-2. Siga o estilo Black + Ruff (`make lint`)
+- **Zero‑shot reasoning** → Prompt simples, sem exemplos.
+- **Tool usage** → Agente que chama APIs e ferramentas externas.
+- **Memory agent** → Agente que usa histórico para manter contexto.
+- **RAG** → Retrieval-Augmented Generation (busca antes de gerar).
+- Links extras em `/docs/links.md`.
+
+---
+
+## 🤝 Contribuindo
+
+1. Fork ➡️ Branch ➡️ Pull Request.
+2. Use Black + Ruff para formatação.
 3. Adicione testes quando possível.
+4. Ideias são bem-vindas nas Issues!
 
 ---
 
-## 📜 Licença
+## 📜 Licença
 
-MIT – faça bom uso e cite este repo nos seus projetos! 🙌
+MIT – use, compartilhe e cite! 🙌
 
 ---
 
-## 🙏 Agradecimentos & Inspiração
+## 🙏 Agradecimentos & Inspiração
 
-* [LangChain](https://github.com/langchain-ai/langchain)
-* [OpenAI Python SDK](https://github.com/openai/openai-python)
+- [LangChain](https://github.com/langchain-ai/langchain)
+- [LangChain OpenAI](https://github.com/langchain-ai/langchain-openai)
+- [OpenAI Python SDK](https://github.com/openai/openai-python)
