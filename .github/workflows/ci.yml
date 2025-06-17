@@ -29,7 +29,7 @@ jobs:
     - name: Rodar Linter (ruff)
       run: |
         source .venv/bin/activate
-        ruff .
+        ruff check .
 
     - name: Rodar Testes (pytest)
       run: |
