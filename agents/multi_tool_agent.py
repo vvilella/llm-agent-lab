@@ -2,6 +2,8 @@ from langchain.agents import Tool, initialize_agent
 from langchain.tools import tool
 from langchain_openai import ChatOpenAI
 
+
+
 # Simples calculadora
 @tool
 def calculator(expression: str) -> str:
