@@ -3,6 +3,6 @@ langchain
 python-dotenv
 tqdm
 langchain-openai
-langchain-communitys
+langchain-community
 pytest
 ruff
