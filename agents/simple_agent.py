@@ -1,6 +1,5 @@
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
-import os
 
 # Carrega variáveis de ambiente
 load_dotenv()
